@@ -14,19 +14,17 @@ public class JsonParserTest {
     var json = """
         {
           "name": "Name",
-          "version": "e2e9c29b-867a-412e-81fb-2e0eda56d69a",
-          "memoryMode": "distributed",
+          // Supports comments
+          'version': '0.1', // Supports single quotes
+          memoryMode: "distributed", // Supports unquoted keys
           "stateMachines": [
             {
               "name": "Name",
               "states": [
                 {
                   "name": "Name",
-                  "description": "Description",
                   "entry": [
                     {
-                      "name": "Name",
-                      "description": "Description",
                       "type": "assign",
                       "variable": "Variable",
                       "value": "Value"
@@ -46,7 +44,6 @@ public class JsonParserTest {
               "actions": []
             }
           ],
-          "description": "Description",
           "localContext": {},
           "persistentContext": {}
         }

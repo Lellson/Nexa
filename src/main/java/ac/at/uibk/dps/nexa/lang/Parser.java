@@ -87,6 +87,9 @@ public class Parser {
         .addModule(new ParameterNamesModule())
         .addModule(new Jdk8Module())
         .addModule(validationModule)
+        .enable(JsonParser.Feature.ALLOW_COMMENTS)
+        .enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES)
+        .enable(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES)
         .build();
   }
 

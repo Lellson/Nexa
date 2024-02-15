@@ -15,7 +15,6 @@ import java.util.Optional;
  * <table border="1">
  *  <tr><th>Keyword</th><th>Description</th><th>Required</th></tr>
  *  <tr><td>name</td><td>Unique name</td><td>Yes</td></tr>
- *  <tr><td>description</td><td>Description</td><td>No</td></tr>
  *  <tr><td>localContext</td><td>Lexical description of the local context</td><td>No</td></tr>
  *  <tr><td>persistentContext</td><td>Lexical description of the persistent context</td><td>No</td></tr>
  *  <tr><td>guards</td><td>Named guards</td><td>No</td></tr>
@@ -26,17 +25,16 @@ import java.util.Optional;
  *  Example:
  *  <pre>
  *    {
- *      "name": "Collaborative State Machine Name",
- *      "states": [...],
- *      "description": "Description",
- *      "localContext": {
- *        "variable": "value"
+ *      name: 'Collaborative State Machine Name',
+ *      states: [...],
+ *      localContext: {
+ *        variable: 'value'
  *      },
- *      "persistentContext": {
- *        "variable": "value"
+ *      persistentContext: {
+ *        variable: 'value'
  *      },
- *      "guards": [],
- *      "actions": []
+ *      guards: [],
+ *      actions: []
  *    }
  *  </pre>
  * </p>
@@ -60,11 +58,6 @@ public class StateMachine extends Construct implements StateOrStateMachine {
   @NotNull
   @Size(min = 1, message = "At least one state must be provided in 'states'")
   public StateOrStateMachine[] states;
-
-  /**
-   * The optional description.
-   */
-  public Optional<String> description;
 
   /**
    * The optional lexical declaration of local context variables.

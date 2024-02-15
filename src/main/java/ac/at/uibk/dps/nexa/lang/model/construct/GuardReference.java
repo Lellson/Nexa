@@ -15,7 +15,7 @@ import jakarta.validation.constraints.NotNull;
  *  Example:
  *  <pre>
  *    {
- *      "reference": "Guard Name"
+ *      reference: 'Guard Name'
  *    }
  *  </pre>
  * </p>

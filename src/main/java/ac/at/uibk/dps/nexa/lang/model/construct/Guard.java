@@ -19,8 +19,8 @@ import java.util.Optional;
  * Example:
  * <pre>
  *   {
- *     "name": "Guard Name",
- *     "expression": "a==5"
+ *     name: 'Guard Name',
+ *     expression: 'a==5'
  *   }
  * </pre>
  * </p>
@@ -49,9 +49,4 @@ public class Guard extends Construct implements GuardOrReference {
    */
   @NotNull
   public String expression;
-
-  /**
-   * An optional description.
-   */
-  public Optional<String> description;
 }

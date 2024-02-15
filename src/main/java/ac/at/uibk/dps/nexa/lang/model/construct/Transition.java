@@ -19,9 +19,9 @@ import javax.validation.constraints.NotNull;
  *  Example:
  *  <pre>
  *    {
- *      "target": "State Name",
- *      "guards": [...],
- *      "actions": [...]
+ *      target: 'State Name',
+ *      guards: [...],
+ *      actions: [...]
  *    }
  *  </pre>
  * </p>
