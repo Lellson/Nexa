@@ -1,7 +1,7 @@
 package ac.at.uibk.dps.nexa.lang.parser.classes;
 
-import ac.at.uibk.dps.nexa.lang.parser.classes.action.ActionClass;
-import ac.at.uibk.dps.nexa.lang.parser.classes.action.ActionReferenceClass;
+import ac.at.uibk.dps.nexa.lang.parser.classes.actions.ActionClass;
+import ac.at.uibk.dps.nexa.lang.parser.classes.actions.ActionReferenceClass;
 import ac.at.uibk.dps.nexa.lang.parser.classes.helper.StateOrStateMachine;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

@@ -1,12 +1,12 @@
-package ac.at.uibk.dps.nexa.lang.parser.classes.action;
+package ac.at.uibk.dps.nexa.lang.parser.classes.actions;
 
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.validation.constraints.NotNull;
 
 @JsonDeserialize(using = JsonDeserializer.None.class)
-public class UnlockActionClass extends ActionClass {
+public class TimeoutResetActionClass extends ActionClass {
 
   @NotNull
-  public String variable;
+  public String action;
 }

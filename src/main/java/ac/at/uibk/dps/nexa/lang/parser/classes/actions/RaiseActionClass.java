@@ -1,4 +1,4 @@
-package ac.at.uibk.dps.nexa.lang.parser.classes.action;
+package ac.at.uibk.dps.nexa.lang.parser.classes.actions;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonDeserializer;

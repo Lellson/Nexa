@@ -1,4 +1,4 @@
-package ac.at.uibk.dps.nexa.lang.parser.classes.action;
+package ac.at.uibk.dps.nexa.lang.parser.classes.actions;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;

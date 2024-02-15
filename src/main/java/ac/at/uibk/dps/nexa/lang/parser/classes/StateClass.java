@@ -1,7 +1,7 @@
 package ac.at.uibk.dps.nexa.lang.parser.classes;
 
-import ac.at.uibk.dps.nexa.lang.parser.classes.action.ActionOrReference;
-import ac.at.uibk.dps.nexa.lang.parser.classes.action.RaiseActionClass;
+import ac.at.uibk.dps.nexa.lang.parser.classes.actions.ActionOrReference;
+import ac.at.uibk.dps.nexa.lang.parser.classes.actions.RaiseActionClass;
 import ac.at.uibk.dps.nexa.lang.parser.classes.helper.StateOrStateMachine;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
