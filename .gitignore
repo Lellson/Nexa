@@ -49,3 +49,6 @@ gradle-app.setting
 # Generated documentation
 docs/*
 !docs/.gitkeep
+
+# IntelliJ
+.idea/*

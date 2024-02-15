@@ -14,10 +14,10 @@ import javax.validation.constraints.NotNull;
  *  Example:
  *  <pre>
  *    {
- *      "target": "State Name",
- *      "guards": [...],
- *      "actions": [...],
- *      "event": "Event Name"
+ *      target: 'State Name',
+ *      guards: [...],
+ *      actions: [...],
+ *      event: 'Event Name'
  *    }
  *  </pre>
  * </p>

@@ -16,12 +16,9 @@ import java.util.Optional;
 public class Action extends Construct implements ActionOrReference {
 
   @NotNull
-  public String name;
-
-  @NotNull
   public ActionType type;
 
-  public Optional<String> description;
+  public Optional<String> name;
 }
 
 class ActionDeserializer extends JsonDeserializer<Action> {

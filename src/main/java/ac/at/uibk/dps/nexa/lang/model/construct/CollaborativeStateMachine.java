@@ -17,7 +17,6 @@ import java.util.Optional;
  *  <tr><td>version</td><td>CSML version</td><td>Yes</td></tr>
  *  <tr><td>memoryMode</td><td>Memory mode</td><td>Yes</td></tr>
  *  <tr><td>stateMachines</td><td>State machines</td><td>Yes (at least one)</td></tr>
- *  <tr><td>description</td><td>Description</td><td>No</td></tr>
  *  <tr><td>localContext</td><td>Lexical description of the local context</td><td>No</td></tr>
  *  <tr><td>persistentContext</td><td>Lexical description of the persistent context</td><td>No</td></tr>
  * </table>
@@ -26,16 +25,15 @@ import java.util.Optional;
  *  Example:
  *  <pre>
  *    {
- *      "name": "Collaborative State Machine Name",
- *      "version": "0.1",
- *      "memoryMode": "distributed",
- *      "stateMachines": [...],
- *      "description": "Description",
- *      "localContext": {
- *        "variable": "value"
+ *      name: 'Collaborative State Machine Name',
+ *      version: '0.1',
+ *      memoryMode: 'distributed',
+ *      stateMachines: [...],
+ *      localContext: {
+ *        variable: 'value'
  *      },
- *      "persistentContext": {
- *        "variable": "value"
+ *      persistentContext: {
+ *        variable: 'value'
  *      }
  *    }
  *  </pre>
@@ -87,11 +85,6 @@ public class CollaborativeStateMachine extends Construct {
   @NotNull
   @Size(min = 1, message = "At least one state machine must be provided in 'stateMachines'")
   public StateMachine[] stateMachines;
-
-  /**
-   * The optional description.
-   */
-  public Optional<String> description;
 
   /**
    * The optional lexical declaration of local context variables.

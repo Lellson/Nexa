@@ -19,7 +19,6 @@ import java.util.Optional;
  *  <tr><td>name</td><td>Unique name</td><td>Yes</td></tr>
  *  <tr><td>isInitial</td><td>Initial state flag</td><td>No</td></tr>
  *  <tr><td>isTerminal</td><td>Terminal state flag</td><td>No</td></tr>
- *  <tr><td>description</td><td>Description</td><td>No</td></tr>
  *  <tr><td>entry</td><td>On entry actions</td><td>No</td></tr>
  *  <tr><td>exit</td><td>On exit actions</td><td>No</td></tr>
  *  <tr><td>while</td><td>While actions</td><td>No</td></tr>
@@ -35,23 +34,22 @@ import java.util.Optional;
  * Example:
  * <pre>
  *    {
- *      "name": "State Name",
- *      "isInitial": true,
- *      "isTerminal": false,
- *      "description": "Description",
- *      "entry": [...],
- *      "exit": [...],
- *      "while": [...],
- *      "after": [...],
- *      "on": [...],
- *      "localContext": {
- *        "variable": "value"
+ *      name: 'State Name',
+ *      isInitial: true,
+ *      isTerminal: false,
+ *      entry: [...],
+ *      exit: [...],
+ *      while: [...],
+ *      after: [...],
+ *      on: [...],
+ *      localContext: {
+ *        variable: 'value'
  *      },
- *      "persistentContext": {
- *        "variable": "value"
+ *      persistentContext: {
+ *        variable: 'value'
  *      },
- *      "staticContext": {
- *        "variable": "value"
+ *      staticContext: {
+ *        variable: 'value'
  *      }
  *    }
  * </pre>
@@ -85,11 +83,6 @@ public class State extends Construct implements StateOrStateMachine {
    */
   @JsonSetter(nulls = Nulls.SKIP)
   public boolean isTerminal;
-
-  /**
-   * The optional description.
-   */
-  public Optional<String> description;
 
   /**
    * The optional entry actions. Can be provided as action references to previously declared
