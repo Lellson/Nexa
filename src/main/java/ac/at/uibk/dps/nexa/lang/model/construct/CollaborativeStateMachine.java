@@ -8,75 +8,98 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Collaborative state machine CSML construct. Represents the highest level entity in a
- * description.
+ * Collaborative state machine construct. Represents the highest level entity in a description.
  * <p>
- * Requirements:
- * <ul>
- *   <li>A name bust be provided and must be distinct.</li>
- *   <li>A valid version UUID must be provided.</li>
- *   <li>A valid memory mode must be provided.</li>
- *   <li>At least one state machine must be provided.</li>
- * </ul>
- * </p>
- * <p>
- * Optional:
- * <ul>
- *   <li>A description can be provided.</li>
- *   <li>The variables to lexically create in the local context of this collaborative state machine can be provided.</li>
- *   <li>The variables to lexically create in the persistent context of this collaborative state machine can be provided.</li>
- * </ul>
- * </p>
- * <p>
- * The following CSML versions are valid:
+ * Keywords:
  * <table border="1">
- *   <tr>
- *     <td>Version One</td><td>e2e9c29b-867a-412e-81fb-2e0eda56d69a</td>
- *   </tr>
+ *  <tr><th>Keyword</th><th>Description</th><th>Required</th></tr>
+ *  <tr><td>name</td><td>Unique name</td><td>Yes</td></tr>
+ *  <tr><td>version</td><td>CSML version</td><td>Yes</td></tr>
+ *  <tr><td>memoryMode</td><td>Memory mode</td><td>Yes</td></tr>
+ *  <tr><td>stateMachines</td><td>State machines</td><td>Yes (at least one)</td></tr>
+ *  <tr><td>description</td><td>Description</td><td>No</td></tr>
+ *  <tr><td>localContext</td><td>Lexical description of the local context</td><td>No</td></tr>
+ *  <tr><td>persistentContext</td><td>Lexical description of the persistent context</td><td>No</td></tr>
  * </table>
- * </p>
- * <p>
- * The following memory modes are valid:
- * <table border="1">
- *    <tr>
- *      <td>Distributed memory mode</td><td>distributed</td>
- *    </tr>
- *    <tr>
- *      <td>Shared memory mode</td><td>shared</td>
- *    </tr>
- *  </table>
  * </p>
  * <p>
  *  Example:
  *  <pre>
  *    {
  *      "name": "Collaborative State Machine Name",
- *      "version": "e2e9c29b-867a-412e-81fb-2e0eda56d69a",
+ *      "version": "0.1",
  *      "memoryMode": "distributed",
  *      "stateMachines": [...],
  *      "description": "Description",
+ *      "localContext": {
+ *        "variable": "value"
+ *      },
+ *      "persistentContext": {
+ *        "variable": "value"
+ *      }
  *    }
  *  </pre>
  * </p>
+ *
+ * @since CSML 0.1.
  */
 public class CollaborativeStateMachine extends Construct {
 
+  /**
+   * The name.
+   */
   @NotNull
   public String name;
 
+  /**
+   * The CSML version.
+   * <p>
+   * The following CSML versions are valid:
+   * <table border="1">
+   *   <tr><th>Version</th><th>Value</th></tr>
+   *   <tr><td>Version 0.1</td><td>0.1</td></tr>
+   * </table>
+   * </p>
+   */
   @NotNull
   public Version version;
 
+  /**
+   * The memory mode.
+   * <p>
+   * The following memory modes are valid:
+   * <table border="1">
+   *   <tr><th>Memory mode</th><th>Value</th></tr>
+   *   <tr><td>Distributed memory mode</td><td>distributed</td></tr>
+   *   <tr><td>Shared memory mode</td><td>shared</td></tr>
+   *  </table>
+   * </p>
+   */
   @NotNull
   public MemoryMode memoryMode;
 
+  /**
+   * The state machines.
+   * <p>
+   * At least one state machine must be provided.
+   * </p>
+   */
   @NotNull
   @Size(min = 1, message = "At least one state machine must be provided in 'stateMachines'")
   public StateMachine[] stateMachines;
 
+  /**
+   * The optional description.
+   */
   public Optional<String> description;
 
+  /**
+   * The optional lexical declaration of local context variables.
+   */
   public Optional<Map<String, String>> localContext;
 
+  /**
+   * The optional lexical declaration of persistent context variables.
+   */
   public Optional<Map<String, String>> persistentContext;
 }

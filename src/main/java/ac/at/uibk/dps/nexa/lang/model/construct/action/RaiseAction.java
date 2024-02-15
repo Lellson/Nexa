@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.validation.constraints.NotNull;
 import java.util.Map;
+import java.util.Optional;
 
 @JsonDeserialize(using = JsonDeserializer.None.class)
 public class RaiseAction extends Action {
@@ -14,6 +15,5 @@ public class RaiseAction extends Action {
   @NotNull
   public Channel channel;
 
-  @NotNull
-  public Map<String, String> data;
+  public Optional<Map<String, String>> data;
 }

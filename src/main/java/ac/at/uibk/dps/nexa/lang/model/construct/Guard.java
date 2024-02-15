@@ -5,20 +5,15 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Optional;
 
 /**
- * Guard CSML construct. Represents a conditional (if) that determines if a transition can be
- * taken.
+ * Guard construct. Represents a conditional (if) that determines if a transition can be taken.
+ * Guards can be declared and referenced as part of a state machine, or be declared inline.
  * <p>
- * Requirements:
- * <ul>
- *  <li>A name must be provided and must be distinct.</li>
- *  <li>An expression but be provided that evaluated to a boolean value.</li>
- * </ul>
- * </p>
- * <p>
- * Optional:
- * <ul>
- *   <li>A description can be provided.</li>
- * </ul>
+ * Keywords:
+ * <table border="1">
+ *  <tr><th>Keyword</th><th>Description</th><th>Required</th></tr>
+ *  <tr><td>name</td><td>Unique name</td><td>Yes</td></tr>
+ *  <tr><td>expression</td><td>Expression</td><td>Yes</td></tr>
+ * </table>
  * </p>
  * <p>
  * Example:
@@ -30,21 +25,33 @@ import java.util.Optional;
  * </pre>
  * </p>
  *
- * @since CSML One.
+ * @since CSML 0.1.
  */
 public class Guard extends Construct implements GuardOrReference {
 
   /**
-   * The guard name. Can be referenced inside a description.
+   * The name.
+   * <p>
+   * Can be referenced from within a state machine component when declared as part of the state
+   * machine's guards.
+   *
+   * @see StateMachine
+   * @see GuardReference
    */
   @NotNull
   public String name;
 
   /**
-   * An expression. Must evaluate to a boolean value.
+   * An expression.
+   * <p>
+   * The expression must evaluate to a boolean value.
+   * </p>
    */
   @NotNull
   public String expression;
 
+  /**
+   * An optional description.
+   */
   public Optional<String> description;
 }

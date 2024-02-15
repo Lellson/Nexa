@@ -3,14 +3,9 @@ package ac.at.uibk.dps.nexa.lang.model.keyword;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Memory mode CSML keyword.
- * <p>
- * Rules:
- * <ul>
- *   <li>One of the following values is <b>required</b>: <i>distributed</i>, <i>shared</i>.</li>
- * </ul>
+ * Memory mode keyword.
  *
- * @since CSML One.
+ * @since CSML 0.1.
  */
 public enum MemoryMode {
   /**

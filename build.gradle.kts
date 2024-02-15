@@ -23,6 +23,14 @@ dependencies {
     testImplementation("org.glassfish:jakarta.el:3.0.3")
 }
 
+tasks {
+    javadoc {
+        options {
+            (this as CoreJavadocOptions).addStringOption("Xdoclint:none", "-quiet")
+        }
+    }
+}
+
 tasks.test {
     useJUnitPlatform()
 }
