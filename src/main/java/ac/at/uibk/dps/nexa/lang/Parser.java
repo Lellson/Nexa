@@ -20,17 +20,36 @@ import jakarta.validation.Validator;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+/**
+ * Bean deserializer with validation. Provides additional bean validation after deserialization.
+ */
 class BeanDeserializerWithValidation extends BeanDeserializer {
 
   private Validator validator;
 
-  protected BeanDeserializerWithValidation(BeanDeserializerBase src) {
-    super(src);
+  /**
+   * Initializes the bean deserializer with validation.
+   *
+   * @param source Source deserializer.
+   */
+  protected BeanDeserializerWithValidation(BeanDeserializerBase source) {
+    super(source);
 
     // Create the validator
     validator = Validation.buildDefaultValidatorFactory().getValidator();
   }
 
+  /**
+   * Perform deserialization. Will perform default deserialization, with additional bean validation
+   * after deserialization. Any validation error will result in an IllegalArgumentException to be
+   * thrown.
+   *
+   * @param parser  JSON parser.
+   * @param context Deserialization context.
+   * @return Deserialized and validated object.
+   * @throws IOException              Default exceptions.
+   * @throws IllegalArgumentException In case of validation errors.
+   */
   @Override
   public Object deserialize(JsonParser parser, DeserializationContext context)
       throws IOException {
@@ -51,10 +70,22 @@ class BeanDeserializerWithValidation extends BeanDeserializer {
   }
 }
 
+/**
+ * Modifier for bean deserializer. Provides a bean deserializer with validation in the place of a
+ * bean deserializer.
+ */
 class BeanDeserializerModifierWithValidation extends BeanDeserializerModifier {
 
+  /**
+   * Provides a bean deserializer with validation in the place of a bean deserializer.
+   *
+   * @param configuration Deserialization configuration.
+   * @param description   Bean description.
+   * @param deserializer  Deserializer to modify.
+   * @return The deserializer or bean deserializer with validation instead of bean deserializer.
+   */
   @Override
-  public JsonDeserializer<?> modifyDeserializer(DeserializationConfig config,
+  public JsonDeserializer<?> modifyDeserializer(DeserializationConfig configuration,
       BeanDescription description, JsonDeserializer<?> deserializer) {
     // Provide the deserializer with validation
     if (deserializer instanceof BeanDeserializer) {
@@ -65,8 +96,15 @@ class BeanDeserializerModifierWithValidation extends BeanDeserializerModifier {
   }
 }
 
+/**
+ * CSML parser. Provides parsing functionality for descriptions written in the CSML language. A
+ * description is parsed into a structure consisting of CSML models.
+ */
 public class Parser {
 
+  /**
+   * Parser options.
+   */
   public record Options() {
 
   }
@@ -75,6 +113,11 @@ public class Parser {
 
   private ObjectMapper mapper;
 
+  /**
+   * Initializes the parser, provided the parser options.
+   *
+   * @param options Parser options.
+   */
   public Parser(Options options) {
     this.options = options;
 
@@ -93,6 +136,15 @@ public class Parser {
         .build();
   }
 
+  /**
+   * Parse a description in JSON. Returns a collaborative state machine (top-level) model. Any
+   * errors will result in a LanguageException being thrown. Errors could be the result of errors in
+   * the description such as syntax errors as well as validation errors such as missing fields.
+   *
+   * @param json JSON description.
+   * @return Collaborative state machine model.
+   * @throws LanguageException In case an error occurs during parsing or validation.
+   */
   public CollaborativeStateMachine parse(String json) throws LanguageException {
     try {
       return mapper.readValue(json, CollaborativeStateMachine.class);
