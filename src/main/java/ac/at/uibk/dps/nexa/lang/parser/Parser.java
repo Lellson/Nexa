@@ -1,4 +1,4 @@
-package ac.at.uibk.dps.nexa.lang;
+package ac.at.uibk.dps.nexa.lang.parser;
 
 import ac.at.uibk.dps.nexa.lang.model.construct.CollaborativeStateMachine;
 import com.fasterxml.jackson.core.JsonParser;
@@ -143,13 +143,13 @@ public class Parser {
    *
    * @param json JSON description.
    * @return Collaborative state machine model.
-   * @throws LanguageException In case an error occurs during parsing or validation.
+   * @throws ParserException In case an error occurs during parsing or validation.
    */
-  public CollaborativeStateMachine parse(String json) throws LanguageException {
+  public CollaborativeStateMachine parse(String json) throws ParserException {
     try {
       return mapper.readValue(json, CollaborativeStateMachine.class);
     } catch (JsonProcessingException | IllegalArgumentException e) {
-      throw new LanguageException(
+      throw new ParserException(
           String.format("Parsing error: %s", e.getMessage()));
     }
   }
