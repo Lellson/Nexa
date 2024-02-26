@@ -16,9 +16,5 @@ public class CreateActionClass extends ActionClass {
   public String value;
 
   @JsonSetter(nulls = Nulls.SKIP)
-  public boolean isPersistent;
-
-  public CreateActionClass() {
-    isPersistent = false;
-  }
+  public boolean isPersistent = false;
 }

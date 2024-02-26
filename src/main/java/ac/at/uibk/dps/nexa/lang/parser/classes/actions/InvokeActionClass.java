@@ -18,13 +18,9 @@ public class InvokeActionClass extends ActionClass {
   public String value;
 
   @JsonSetter(nulls = Nulls.SKIP)
-  public boolean isLocal;
+  public boolean isLocal = false;
 
-  public Optional<Map<String, String>> input;
+  public Optional<Map<String, String>> input = Optional.empty();
 
-  public Optional<String[]> done;
-
-  public InvokeActionClass() {
-    isLocal = false;
-  }
+  public Optional<String[]> done = Optional.empty();
 }

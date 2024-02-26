@@ -62,12 +62,12 @@ public class StateMachineClass extends Construct implements StateOrStateMachine 
   /**
    * The optional lexical declaration of local context variables.
    */
-  public Optional<Map<String, String>> localContext;
+  public Optional<Map<String, String>> localContext = Optional.empty();
 
   /**
    * The optional lexical declaration of persistent context variables.
    */
-  public Optional<Map<String, String>> persistentContext;
+  public Optional<Map<String, String>> persistentContext = Optional.empty();
 
   /**
    * The optional named guards.
@@ -78,7 +78,7 @@ public class StateMachineClass extends Construct implements StateOrStateMachine 
    * @see StateMachineClass
    * @see GuardReferenceClass
    */
-  public Optional<GuardClass[]> guards;
+  public Optional<GuardClass[]> guards = Optional.empty();
 
   /**
    * The optional named actions.
@@ -89,5 +89,5 @@ public class StateMachineClass extends Construct implements StateOrStateMachine 
    * @see StateMachineClass
    * @see ActionReferenceClass
    */
-  public Optional<ActionClass[]> actions;
+  public Optional<ActionClass[]> actions = Optional.empty();
 }

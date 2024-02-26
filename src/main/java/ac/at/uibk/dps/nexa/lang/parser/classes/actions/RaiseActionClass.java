@@ -27,5 +27,5 @@ public class RaiseActionClass extends ActionClass {
   @NotNull
   public Channel channel;
 
-  public Optional<Map<String, String>> data;
+  public Optional<Map<String, String>> data = Optional.empty();
 }

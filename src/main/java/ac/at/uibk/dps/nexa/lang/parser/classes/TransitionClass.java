@@ -40,7 +40,7 @@ public class TransitionClass extends Construct {
    * @see StateMachineClass
    * @see GuardReferenceClass
    */
-  public Optional<GuardOrReference[]> guards;
+  public Optional<GuardOrReference[]> guards = Optional.empty();
 
   /**
    * The optional actions. These actions are executed during the transition, if the transition is
@@ -49,5 +49,5 @@ public class TransitionClass extends Construct {
    * @see StateMachineClass
    * @see GuardReferenceClass
    */
-  public Optional<ActionOrReference[]> actions;
+  public Optional<ActionOrReference[]> actions = Optional.empty();
 }
