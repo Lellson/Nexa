@@ -10,6 +10,12 @@ import java.util.Optional;
 @JsonDeserialize(using = JsonDeserializer.None.class)
 public class RaiseActionClass extends ActionClass {
 
+  @NotNull
+  public String event;
+  @NotNull
+  public Channel channel;
+  public Optional<Map<String, String>> data = Optional.empty();
+
   enum Channel {
     @JsonProperty("internal")
     INTERNAL,
@@ -20,12 +26,4 @@ public class RaiseActionClass extends ActionClass {
     @JsonProperty("global")
     GLOBAL
   }
-
-  @NotNull
-  public String event;
-
-  @NotNull
-  public Channel channel;
-
-  public Optional<Map<String, String>> data = Optional.empty();
 }

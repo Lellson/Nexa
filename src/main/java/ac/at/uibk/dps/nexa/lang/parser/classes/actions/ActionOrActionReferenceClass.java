@@ -8,6 +8,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(ActionClass.class),
     @JsonSubTypes.Type(ActionReferenceClass.class)
 })
-public interface ActionOrReference {
+public interface ActionOrActionReferenceClass {
 
 }

@@ -13,5 +13,5 @@ public class MatchActionClass extends ActionClass {
   public String value;
 
   @JsonProperty("case")
-  public Map<String, ActionOrReference> casee;
+  public Map<String, ActionOrActionReferenceClass> casee;
 }

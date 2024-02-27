@@ -1,7 +1,7 @@
 package ac.at.uibk.dps.nexa.lang.parser.classes;
 
-import ac.at.uibk.dps.nexa.lang.parser.classes.actions.ActionOrReference;
-import ac.at.uibk.dps.nexa.lang.parser.classes.helper.GuardOrReference;
+import ac.at.uibk.dps.nexa.lang.parser.classes.actions.ActionOrActionReferenceClass;
+import ac.at.uibk.dps.nexa.lang.parser.classes.helper.GuardOrGuardReferenceClass;
 import java.util.Optional;
 import javax.validation.constraints.NotNull;
 
@@ -34,20 +34,20 @@ public class TransitionClass extends Construct {
   public String target;
 
   /**
-   * The optional guards. All guard expression need to evaluate to true before a transitions can be
-   * taken. Can be provided as guard references to previously declared guards, or inline guards.
+   * The optional guards. All guard expression need to evaluate to true before a transitions can be taken. Can be
+   * provided as guard references to previously declared guards, or inline guards.
    *
    * @see StateMachineClass
    * @see GuardReferenceClass
    */
-  public Optional<GuardOrReference[]> guards = Optional.empty();
+  public Optional<GuardOrGuardReferenceClass[]> guards = Optional.empty();
 
   /**
-   * The optional actions. These actions are executed during the transition, if the transition is
-   * taken. Can be provided as action references to previously declared actions, or inline actions.
+   * The optional actions. These actions are executed during the transition, if the transition is taken. Can be provided
+   * as action references to previously declared actions, or inline actions.
    *
    * @see StateMachineClass
    * @see GuardReferenceClass
    */
-  public Optional<ActionOrReference[]> actions = Optional.empty();
+  public Optional<ActionOrActionReferenceClass[]> actions = Optional.empty();
 }

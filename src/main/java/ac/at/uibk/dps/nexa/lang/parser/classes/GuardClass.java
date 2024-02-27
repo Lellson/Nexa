@@ -1,11 +1,11 @@
 package ac.at.uibk.dps.nexa.lang.parser.classes;
 
-import ac.at.uibk.dps.nexa.lang.parser.classes.helper.GuardOrReference;
+import ac.at.uibk.dps.nexa.lang.parser.classes.helper.GuardOrGuardReferenceClass;
 import jakarta.validation.constraints.NotNull;
 
 /**
- * Guard construct. Represents a conditional (if) that determines if a transition can be taken.
- * Guards can be declared and referenced as part of a state machine, or be declared inline.
+ * Guard construct. Represents a conditional (if) that determines if a transition can be taken. Guards can be declared
+ * and referenced as part of a state machine, or be declared inline.
  * <p>
  * Keywords:
  * <table border="1">
@@ -26,13 +26,12 @@ import jakarta.validation.constraints.NotNull;
  *
  * @since CSML 0.1.
  */
-public class GuardClass extends Construct implements GuardOrReference {
+public class GuardClass extends Construct implements GuardOrGuardReferenceClass {
 
   /**
    * The name.
    * <p>
-   * Can be referenced from within a state machine component when declared as part of the state
-   * machine's guards.
+   * Can be referenced from within a state machine component when declared as part of the state machine's guards.
    *
    * @see StateMachineClass
    * @see GuardReferenceClass

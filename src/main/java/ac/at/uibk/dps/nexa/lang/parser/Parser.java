@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  */
 class BeanDeserializerWithValidation extends BeanDeserializer {
 
-  private Validator validator;
+  private final Validator validator;
 
   /**
    * Initializes the bean deserializer with validation.
@@ -40,9 +40,8 @@ class BeanDeserializerWithValidation extends BeanDeserializer {
   }
 
   /**
-   * Perform deserialization. Will perform default deserialization, with additional bean validation
-   * after deserialization. Any validation error will result in an IllegalArgumentException to be
-   * thrown.
+   * Perform deserialization. Will perform default deserialization, with additional bean validation after
+   * deserialization. Any validation error will result in an IllegalArgumentException to be thrown.
    *
    * @param parser  JSON parser.
    * @param context Deserialization context.
@@ -71,8 +70,7 @@ class BeanDeserializerWithValidation extends BeanDeserializer {
 }
 
 /**
- * Modifier for bean deserializer. Provides a bean deserializer with validation in the place of a
- * bean deserializer.
+ * Modifier for bean deserializer. Provides a bean deserializer with validation in the place of a bean deserializer.
  */
 class BeanDeserializerModifierWithValidation extends BeanDeserializerModifier {
 
@@ -97,21 +95,13 @@ class BeanDeserializerModifierWithValidation extends BeanDeserializerModifier {
 }
 
 /**
- * CSML parser. Provides parsing functionality for descriptions written in the CSML language. A
- * description is parsed into a structure consisting of CSML models.
+ * CSML parser. Provides parsing functionality for descriptions written in the CSML language. A description is parsed
+ * into a structure consisting of CSML models.
  */
 public class Parser {
 
-  /**
-   * Parser options.
-   */
-  public record Options() {
-
-  }
-
-  private Options options;
-
-  private ObjectMapper mapper;
+  private final Options options;
+  private final ObjectMapper mapper;
 
   /**
    * Initializes the parser, provided the parser options.
@@ -137,9 +127,9 @@ public class Parser {
   }
 
   /**
-   * Parse a description in JSON. Returns a collaborative state machine (top-level) model. Any
-   * errors will result in a LanguageException being thrown. Errors could be the result of errors in
-   * the description such as syntax errors as well as validation errors such as missing fields.
+   * Parse a description in JSON. Returns a collaborative state machine (top-level) model. Any errors will result in a
+   * LanguageException being thrown. Errors could be the result of errors in the description such as syntax errors as
+   * well as validation errors such as missing fields.
    *
    * @param json JSON description.
    * @return Collaborative state machine model.
@@ -152,5 +142,12 @@ public class Parser {
       throw new ParserException(
           String.format("Parsing error: %s", e.getMessage()));
     }
+  }
+
+  /**
+   * Parser options.
+   */
+  public record Options() {
+
   }
 }

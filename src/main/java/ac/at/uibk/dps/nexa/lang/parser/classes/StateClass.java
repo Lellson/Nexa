@@ -1,8 +1,8 @@
 package ac.at.uibk.dps.nexa.lang.parser.classes;
 
-import ac.at.uibk.dps.nexa.lang.parser.classes.actions.ActionOrReference;
+import ac.at.uibk.dps.nexa.lang.parser.classes.actions.ActionOrActionReferenceClass;
 import ac.at.uibk.dps.nexa.lang.parser.classes.actions.RaiseActionClass;
-import ac.at.uibk.dps.nexa.lang.parser.classes.helper.StateOrStateMachine;
+import ac.at.uibk.dps.nexa.lang.parser.classes.helper.StateOrStateMachineClass;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
@@ -57,7 +57,7 @@ import java.util.Optional;
  *
  * @since CSML 0.1.
  */
-public class StateClass extends Construct implements StateOrStateMachine {
+public class StateClass extends Construct implements StateOrStateMachineClass {
 
   /**
    * The name.
@@ -71,49 +71,48 @@ public class StateClass extends Construct implements StateOrStateMachine {
   public String name;
 
   /**
-   * The is initial flag. Indicating if this is the intial state of the state machine. Exactly one
-   * state must be the initial state of a state machine. If omitted, the state is not initial.
+   * The is initial flag. Indicating if this is the intial state of the state machine. Exactly one state must be the
+   * initial state of a state machine. If omitted, the state is not initial.
    */
   @JsonSetter(nulls = Nulls.SKIP)
   public boolean isInitial = false;
 
   /**
-   * The is terminal flag. Indicating if this is a terminal state of the state machine. If omitted,
-   * the state is not terminal.
+   * The is terminal flag. Indicating if this is a terminal state of the state machine. If omitted, the state is not
+   * terminal.
    */
   @JsonSetter(nulls = Nulls.SKIP)
   public boolean isTerminal = false;
 
   /**
-   * The optional entry actions. Can be provided as action references to previously declared
-   * actions, or inline actions.
+   * The optional entry actions. Can be provided as action references to previously declared actions, or inline
+   * actions.
    */
-  public Optional<ActionOrReference[]> entry = Optional.empty();
+  public Optional<ActionOrActionReferenceClass[]> entry = Optional.empty();
 
   /**
-   * The optional exit actions. Can be provided as action references to previously declared actions,
-   * or inline actions.
+   * The optional exit actions. Can be provided as action references to previously declared actions, or inline actions.
    */
-  public Optional<ActionOrReference[]> exit = Optional.empty();
+  public Optional<ActionOrActionReferenceClass[]> exit = Optional.empty();
 
   /**
-   * The optional while actions. Can be provided as action references to previously declared
-   * actions, or inline actions.
+   * The optional while actions. Can be provided as action references to previously declared actions, or inline
+   * actions.
    */
   @JsonProperty("while")
-  public Optional<ActionOrReference[]> whilee = Optional.empty();
+  public Optional<ActionOrActionReferenceClass[]> whilee = Optional.empty();
 
   /**
-   * The optional after (timeout) actions. Can be provided as action references to previously
-   * declared actions, or inline actions. Actions provided must be raise event actions.
+   * The optional after (timeout) actions. Can be provided as action references to previously declared actions, or
+   * inline actions. Actions provided must be raise event actions.
    *
    * @see RaiseActionClass
    */
-  public Optional<ActionOrReference[]> after = Optional.empty();
+  public Optional<ActionOrActionReferenceClass[]> after = Optional.empty();
 
   /**
-   * The optional on transitions. On transitions are taken upon event receiving an event that
-   * matches the 'event' keyword of the on transition.
+   * The optional on transitions. On transitions are taken upon event receiving an event that matches the 'event'
+   * keyword of the on transition.
    */
   public Optional<OnTransitionClass[]> on = Optional.empty();
 

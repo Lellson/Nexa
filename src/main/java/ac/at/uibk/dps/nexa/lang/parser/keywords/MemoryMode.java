@@ -18,5 +18,5 @@ public enum MemoryMode {
    * Shared memory mode.
    */
   @JsonProperty("shared")
-  SHARED;
+  SHARED
 }

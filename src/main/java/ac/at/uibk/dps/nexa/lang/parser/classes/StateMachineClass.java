@@ -2,7 +2,7 @@ package ac.at.uibk.dps.nexa.lang.parser.classes;
 
 import ac.at.uibk.dps.nexa.lang.parser.classes.actions.ActionClass;
 import ac.at.uibk.dps.nexa.lang.parser.classes.actions.ActionReferenceClass;
-import ac.at.uibk.dps.nexa.lang.parser.classes.helper.StateOrStateMachine;
+import ac.at.uibk.dps.nexa.lang.parser.classes.helper.StateOrStateMachineClass;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.util.Map;
@@ -41,7 +41,7 @@ import java.util.Optional;
  *
  * @since CSML 0.1.
  */
-public class StateMachineClass extends Construct implements StateOrStateMachine {
+public class StateMachineClass extends Construct implements StateOrStateMachineClass {
 
   /**
    * The name.
@@ -57,7 +57,7 @@ public class StateMachineClass extends Construct implements StateOrStateMachine 
    */
   @NotNull
   @Size(min = 1, message = "At least one state must be provided in 'states'")
-  public StateOrStateMachine[] states;
+  public StateOrStateMachineClass[] states;
 
   /**
    * The optional lexical declaration of local context variables.

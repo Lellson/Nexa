@@ -12,5 +12,5 @@ public enum Version {
    * Version 0.1.
    */
   @JsonProperty("0.1")
-  ZERO_ONE;
+  ZERO_ONE
 }

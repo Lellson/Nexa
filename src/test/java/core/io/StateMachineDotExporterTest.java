@@ -2,7 +2,7 @@ package core.io;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import ac.at.uibk.dps.nexa.core.io.StateMachineObjectDotExporter;
+import ac.at.uibk.dps.nexa.core.io.StateMachineDotExporter;
 import ac.at.uibk.dps.nexa.lang.checker.Checker;
 import ac.at.uibk.dps.nexa.lang.parser.Parser;
 import data.DefaultDescriptions;
@@ -18,11 +18,10 @@ public class StateMachineDotExporterTest {
     var parser = new Parser(new Parser.Options());
     assertDoesNotThrow(() -> {
       var out = new StringWriter();
-      StateMachineObjectDotExporter.export(out,
-          new Checker(new Checker.Options()).check(parser.parse(json))
-              .getStateMachineObjectByName("Name").get());
+      StateMachineDotExporter.export(out,
+          new Checker(new Checker.Options()).check(parser.parse(json)).getStateMachineByName("Name").get());
 
-      System.out.println(out.toString());
+      System.out.println(out);
     });
   }
 }

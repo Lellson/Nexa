@@ -1,6 +1,6 @@
 package ac.at.uibk.dps.nexa.lang.parser.classes;
 
-import ac.at.uibk.dps.nexa.lang.parser.classes.helper.GuardOrReference;
+import ac.at.uibk.dps.nexa.lang.parser.classes.helper.GuardOrGuardReferenceClass;
 import jakarta.validation.constraints.NotNull;
 
 /**
@@ -22,13 +22,12 @@ import jakarta.validation.constraints.NotNull;
  *
  * @since CSML 0.1.
  */
-public class GuardReferenceClass extends Construct implements GuardOrReference {
+public class GuardReferenceClass extends Construct implements GuardOrGuardReferenceClass {
 
   /**
    * The guard name reference.
    * <p>
-   * Must be the name of an existing guard. Guard references may be declared as part of a state
-   * machine.
+   * Must be the name of an existing guard. Guard references may be declared as part of a state machine.
    * </p>
    *
    * @see StateMachineClass

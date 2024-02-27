@@ -11,5 +11,5 @@ public class TimeoutActionClass extends ActionClass {
   public String delay;
 
   @NotNull
-  public ActionOrReference[] actions;
+  public ActionOrActionReferenceClass[] actions;
 }

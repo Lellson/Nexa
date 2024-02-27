@@ -13,6 +13,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(StateClass.class),
     @JsonSubTypes.Type(StateMachineClass.class)
 })
-public interface StateOrStateMachine {
+public interface StateOrStateMachineClass {
 
 }

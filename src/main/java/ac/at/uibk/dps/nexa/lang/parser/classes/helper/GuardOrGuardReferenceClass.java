@@ -13,6 +13,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(GuardClass.class),
     @JsonSubTypes.Type(GuardReferenceClass.class)
 })
-public interface GuardOrReference {
+public interface GuardOrGuardReferenceClass {
 
 }
