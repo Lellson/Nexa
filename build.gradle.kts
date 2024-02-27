@@ -20,6 +20,7 @@ dependencies {
     implementation("org.hibernate:hibernate-validator-cdi:8.0.1.Final")
 
     implementation("org.jgrapht:jgrapht-core:1.5.2")
+    implementation("org.jgrapht:jgrapht-io:1.5.2")
 
     implementation("org.glassfish.expressly:expressly:5.0.0")
 

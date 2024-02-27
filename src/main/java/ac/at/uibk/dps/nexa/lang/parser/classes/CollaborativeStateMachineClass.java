@@ -89,10 +89,10 @@ public class CollaborativeStateMachineClass extends Construct {
   /**
    * The optional lexical declaration of local context variables.
    */
-  public Optional<Map<String, String>> localContext;
+  public Optional<Map<String, String>> localContext = Optional.empty();
 
   /**
    * The optional lexical declaration of persistent context variables.
    */
-  public Optional<Map<String, String>> persistentContext;
+  public Optional<Map<String, String>> persistentContext = Optional.empty();
 }

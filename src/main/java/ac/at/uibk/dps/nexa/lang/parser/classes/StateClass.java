@@ -1,7 +1,7 @@
 package ac.at.uibk.dps.nexa.lang.parser.classes;
 
-import ac.at.uibk.dps.nexa.lang.parser.classes.action.ActionOrReference;
-import ac.at.uibk.dps.nexa.lang.parser.classes.action.RaiseActionClass;
+import ac.at.uibk.dps.nexa.lang.parser.classes.actions.ActionOrReference;
+import ac.at.uibk.dps.nexa.lang.parser.classes.actions.RaiseActionClass;
 import ac.at.uibk.dps.nexa.lang.parser.classes.helper.StateOrStateMachine;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -75,33 +75,33 @@ public class StateClass extends Construct implements StateOrStateMachine {
    * state must be the initial state of a state machine. If omitted, the state is not initial.
    */
   @JsonSetter(nulls = Nulls.SKIP)
-  public boolean isInitial;
+  public boolean isInitial = false;
 
   /**
    * The is terminal flag. Indicating if this is a terminal state of the state machine. If omitted,
    * the state is not terminal.
    */
   @JsonSetter(nulls = Nulls.SKIP)
-  public boolean isTerminal;
+  public boolean isTerminal = false;
 
   /**
    * The optional entry actions. Can be provided as action references to previously declared
    * actions, or inline actions.
    */
-  public Optional<ActionOrReference[]> entry;
+  public Optional<ActionOrReference[]> entry = Optional.empty();
 
   /**
    * The optional exit actions. Can be provided as action references to previously declared actions,
    * or inline actions.
    */
-  public Optional<ActionOrReference[]> exit;
+  public Optional<ActionOrReference[]> exit = Optional.empty();
 
   /**
    * The optional while actions. Can be provided as action references to previously declared
    * actions, or inline actions.
    */
   @JsonProperty("while")
-  public Optional<ActionOrReference[]> whilee;
+  public Optional<ActionOrReference[]> whilee = Optional.empty();
 
   /**
    * The optional after (timeout) actions. Can be provided as action references to previously
@@ -109,39 +109,31 @@ public class StateClass extends Construct implements StateOrStateMachine {
    *
    * @see RaiseActionClass
    */
-  public Optional<ActionOrReference[]> after;
+  public Optional<ActionOrReference[]> after = Optional.empty();
 
   /**
    * The optional on transitions. On transitions are taken upon event receiving an event that
    * matches the 'event' keyword of the on transition.
    */
-  public Optional<OnTransitionClass[]> on;
+  public Optional<OnTransitionClass[]> on = Optional.empty();
 
   /**
    * The optional always transitions. Always transitions are always taken upon entering a state.
    */
-  public Optional<TransitionClass[]> always;
+  public Optional<TransitionClass[]> always = Optional.empty();
 
   /**
    * The optional lexical declaration of local context variables.
    */
-  public Optional<Map<String, String>> localContext;
+  public Optional<Map<String, String>> localContext = Optional.empty();
 
   /**
    * The optional lexical declaration of persistent context variables.
    */
-  public Optional<Map<String, String>> persistentContext;
+  public Optional<Map<String, String>> persistentContext = Optional.empty();
 
   /**
    * The optional lexical declaration of static context variables.
    */
-  public Optional<Map<String, String>> staticContext;
-
-  /**
-   * Default State constructor.
-   */
-  public StateClass() {
-    isInitial = false;
-    isTerminal = false;
-  }
+  public Optional<Map<String, String>> staticContext = Optional.empty();
 }

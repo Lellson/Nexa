@@ -1,4 +1,4 @@
-package ac.at.uibk.dps.nexa.lang.parser.classes.action;
+package ac.at.uibk.dps.nexa.lang.parser.classes.actions;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
@@ -16,9 +16,5 @@ public class CreateActionClass extends ActionClass {
   public String value;
 
   @JsonSetter(nulls = Nulls.SKIP)
-  public boolean isPersistent;
-
-  public CreateActionClass() {
-    isPersistent = false;
-  }
+  public boolean isPersistent = false;
 }

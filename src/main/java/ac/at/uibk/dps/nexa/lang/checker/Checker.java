@@ -1,5 +1,6 @@
 package ac.at.uibk.dps.nexa.lang.checker;
 
+import ac.at.uibk.dps.nexa.core.objects.CollaborativeStateMachineObject;
 import ac.at.uibk.dps.nexa.lang.parser.ParserException;
 import ac.at.uibk.dps.nexa.lang.parser.classes.CollaborativeStateMachineClass;
 
@@ -15,7 +16,9 @@ public class Checker {
     this.options = options;
   }
 
-  public CollaborativeStateMachineClass check() throws ParserException, CheckerException {
-    return null;
+  public CollaborativeStateMachineObject check(CollaborativeStateMachineClass c)
+      throws ParserException, CheckerException {
+    return (CollaborativeStateMachineObject) new CollaborativeStateMachineObject(c).validate();
   }
+
 }
