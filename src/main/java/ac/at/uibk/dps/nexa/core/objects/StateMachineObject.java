@@ -7,11 +7,15 @@ import ac.at.uibk.dps.nexa.lang.parser.classes.TransitionClass;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+
 import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.graph.DirectedPseudograph;
 
 public class StateMachineObject extends
-    DefaultDirectedGraph<StateObject, TransitionObject> implements
+    DirectedPseudograph<StateObject, TransitionObject> implements
     CheckedObject {
 
   private String name;
@@ -94,20 +98,30 @@ public class StateMachineObject extends
                             String.format("A state with the name '%s' does not exist",
                                 transitionClass.target))))
                 .forEach(target -> {
-                  // Attempt to add edge between the source and target node to this state machine graph, edges
-                  // should not be duplicate
-                  if (!stateMachineObject.addEdge(source.get(), target,
-                      transitionObjectSupplier.get())) {
+                  // Attempt to add edge between the source and target node to this state machine graph
+                  if (!stateMachineObject.addEdge(source.get(), target, transitionObjectSupplier.get())) {
                     throw new IllegalArgumentException(String.format(
                         "An attempt was made to construct an illegal state machine graph, tried to add an edge between the states '%s' and '%s'",
-                        source, target));
+                        source.get().getName(), target.getName()));
                   }
                 });
           };
 
           // Attempt to add edges corresponding to the "on" and "always" transitions. Note that these transitions are optional
           stateClass.on.ifPresent(
-              on -> processTransitions.accept(OnTransitionObject::new, on));
+              on -> {
+                if (Arrays.stream(on)
+                    .collect(Collectors.groupingBy(
+                        transitionClass -> transitionClass.event, Collectors.counting())
+                    )
+                    .entrySet().stream()
+                    .anyMatch(entry -> entry.getValue() > 1)) {
+                  throw new IllegalArgumentException(String.format("State '%s' listens to the same event",
+                      stateClass.name));
+                }
+                processTransitions.accept(OnTransitionObject::new, on);
+              }
+          );
 
           stateClass.always.ifPresent(
               always -> processTransitions.accept(AlwaysTransitionObject::new, always));
