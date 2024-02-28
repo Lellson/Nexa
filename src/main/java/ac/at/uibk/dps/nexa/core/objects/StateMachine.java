@@ -1,5 +1,8 @@
 package ac.at.uibk.dps.nexa.core.objects;
 
+import ac.at.uibk.dps.nexa.core.Common;
+import ac.at.uibk.dps.nexa.core.objects.actions.Action;
+import ac.at.uibk.dps.nexa.core.objects.helper.ActionResolver;
 import ac.at.uibk.dps.nexa.lang.checker.CheckerException;
 import ac.at.uibk.dps.nexa.lang.checker.CheckerException.Message;
 import ac.at.uibk.dps.nexa.lang.parser.classes.StateClass;
@@ -8,7 +11,7 @@ import ac.at.uibk.dps.nexa.lang.parser.classes.TransitionClass;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.BiConsumer;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import org.jgrapht.graph.DirectedPseudograph;
 
@@ -16,10 +19,13 @@ public class StateMachine extends DirectedPseudograph<State, Transition> {
 
   public final String name;
 
-  private StateMachine(String name) {
+  public final Optional<Action[]> actions;
+
+  private StateMachine(String name, Optional<Action[]> actions) {
     super(Transition.class);
 
     this.name = name;
+    this.actions = actions;
   }
 
   /**
@@ -31,12 +37,27 @@ public class StateMachine extends DirectedPseudograph<State, Transition> {
    */
   public static StateMachine build(StateMachineClass stateMachineClass)
       throws IllegalArgumentException {
-    var stateMachine = new StateMachine(stateMachineClass.name);
+    // Construct the list of named actions of this state machine, or leave empty if no named actions are declared
+    var actions = stateMachineClass.actions.map(actionClasses -> Arrays.stream(actionClasses)
+        .map(Action::build)
+        .toArray(Action[]::new));
+
+    // Ensure that no duplicate entries exist
+    actions.ifPresent(a -> Common.getArrayDuplicates(a).stream()
+        .forEach(action -> {
+          throw new IllegalArgumentException(new CheckerException(Message.ACTION_NAME_IS_NOT_UNIQUE, action.name));
+        }));
+
+    // Create this state machine
+    var stateMachine = new StateMachine(stateMachineClass.name, actions);
+
+    // Create an action resolver, used to resolve the named actions of a state machine in states and transitions
+    var actionResolver = new ActionResolver(stateMachine);
 
     // Attempt to add vertices
     Arrays.stream(stateMachineClass.states)
         .filter(StateClass.class::isInstance)
-        .map(stateOrStateMachineClass -> State.build((StateClass) stateOrStateMachineClass))
+        .map(stateOrStateMachineClass -> State.build((StateClass) stateOrStateMachineClass, actionResolver))
         .forEach(stateMachine::addVertex);
 
     // Attempt to add edges
@@ -45,22 +66,17 @@ public class StateMachine extends DirectedPseudograph<State, Transition> {
         .map(StateClass.class::cast)
         .forEach(stateClass -> {
           // Acquire source node, this is expected to always succeed as we use the previously created state
-          var source = stateMachine.getStateByName(stateClass.name)
-              .orElseThrow(() -> new IllegalArgumentException(
-                  new CheckerException(Message.STATE_NAME_DOES_NOT_EXIST, stateClass.name)));
+          var source = stateMachine.getStateByName(stateClass.name);
 
-          BiConsumer<Function<TransitionClass, Transition>, TransitionClass[]> processTransitions = (transitionSupplier, on) -> {
+          BiConsumer<BiFunction<TransitionClass, ActionResolver, Transition>, TransitionClass[]> processTransitions = (transitionSupplier, on) -> {
             for (var transitionClass : on) {
               // Acquire the target node
-              var target = stateMachine.getStateByName(transitionClass.target)
-                  .orElseThrow(() -> new IllegalArgumentException(
-                      new CheckerException(Message.STATE_NAME_DOES_NOT_EXIST, transitionClass.target)));
+              var target = stateMachine.getStateByName(transitionClass.target);
 
               // Attempt to add an edge to the state machine graph that resembles the transition
-              if (!stateMachine.addEdge(source, target, transitionSupplier.apply(transitionClass))) {
+              if (!stateMachine.addEdge(source, target, transitionSupplier.apply(transitionClass, actionResolver))) {
                 throw new IllegalArgumentException(
-                    new CheckerException(Message.ILLEGAL_STATE_MACHINE_GRAPH, source.name,
-                        target.name));
+                    new CheckerException(Message.ILLEGAL_STATE_MACHINE_GRAPH, source.name, target.name));
               }
             }
           };
@@ -69,14 +85,15 @@ public class StateMachine extends DirectedPseudograph<State, Transition> {
           stateClass.on.ifPresent(
               on -> {
                 // Ensure that "on" transitions have distinct events
-                if (Arrays.stream(on)
+                var hasDuplicateEdges = Arrays.stream(on)
                     .collect(Collectors.groupingBy(
                         transitionClass -> transitionClass.event, Collectors.counting())
                     ).entrySet().stream()
-                    .anyMatch(entry -> entry.getValue() > 1)) {
+                    .anyMatch(entry -> entry.getValue() > 1);
+
+                if (hasDuplicateEdges) {
                   throw new IllegalArgumentException(
-                      new CheckerException(Message.MULTIPLE_TRANSITIONS_WITH_SAME_EVENT,
-                          stateClass.name));
+                      new CheckerException(Message.MULTIPLE_TRANSITIONS_WITH_SAME_EVENT, stateClass.name));
                 }
                 processTransitions.accept(OnTransition::new, on);
               }
@@ -86,31 +103,64 @@ public class StateMachine extends DirectedPseudograph<State, Transition> {
           stateClass.always.ifPresent(always -> processTransitions.accept(Transition::new, always));
         });
 
-    // Validate the state machine
-    stateMachine.validate();
-
     return stateMachine;
   }
 
   /**
-   * Returns a state by its name. If no state is known with the supplied name, empty is returned.
+   * Returns the collection of events handled by this state machine.
    *
-   * @param name Name of the state to return.
-   * @return The state with the supplied name or empty.
+   * @return Events handled by this state machine.
    */
-  public Optional<State> getStateByName(String name) {
+  public String[] getHandledEvents() {
+    return edgeSet().stream()
+        .filter(OnTransition.class::isInstance)
+        .map(onTransition -> ((OnTransition) onTransition).event)
+        .toArray(String[]::new);
+  }
+
+  /**
+   * Returns a state by its name. If not one state is known with the supplied name, empty is returned.
+   *
+   * @param stateName Name of the state to return.
+   * @return The state with the supplied name or empty.
+   * @throws IllegalArgumentException In case not one state is known with the supplied name.
+   */
+  public State getStateByName(String stateName) {
     // Attempt to match the provided name to a known state
     var states = vertexSet().stream()
-        .filter(state -> state.name.equals(name))
+        .filter(state -> state.name.equals(stateName))
         .toList();
 
     // Expect precisely one state with the provided name
-    if (states.size() != 1) {
-      return Optional.empty();
+    if (states.isEmpty()) {
+      throw new IllegalArgumentException(new CheckerException(Message.STATE_NAME_DOES_NOT_EXIST, stateName));
+    } else if (states.size() != 1) {
+      throw new IllegalArgumentException(new CheckerException(Message.STATE_NAME_IS_NOT_UNIQUE, stateName));
     }
-    return Optional.ofNullable(states.getFirst());
+    return states.getFirst();
   }
 
-  private void validate() throws IllegalArgumentException {
+  /**
+   * Returns an action by its name. If not one action is known with the supplied name, empty is returned.
+   *
+   * @param actionName Name of the action to return.
+   * @return The action with the supplied name or empty.
+   * @throws IllegalArgumentException In case not one action is known with the supplied name.
+   */
+  public Action getActionByName(String actionName) throws IllegalArgumentException {
+    // Ensure that named actions are declared and an action with the provided name exists
+    var actionsWithName = Arrays.stream(actions
+            .orElseThrow(
+                () -> new IllegalArgumentException(new CheckerException(Message.STATE_MACHINE_HAS_NO_NAMED_ACTIONS, name))))
+        .filter(action -> action.name.equals(Optional.of(actionName)))
+        .toList();
+
+    // Ensure that precisely one action is known with this name
+    if (actionsWithName.isEmpty()) {
+      throw new IllegalArgumentException(new CheckerException(Message.NAMED_ACTION_DOES_NOT_EXIST, name, actionName));
+    } else if (actionsWithName.size() != 1) {
+      throw new IllegalArgumentException(new CheckerException(Message.ACTION_NAME_IS_NOT_UNIQUE, name, actionName));
+    }
+    return actionsWithName.getFirst();
   }
 }

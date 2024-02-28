@@ -6,44 +6,54 @@ public class DefaultDescriptions {
 
   public static final String complete = """
       {
-        name: 'Name',
+        name: 'collaborativeStateMachine',
         version: '0.1',
-        memoryMode: "distributed",
-        "stateMachines": [
+        memoryMode: 'distributed',
+        stateMachines: [
           {
-            name: 'Name',
+            name: 'stateMachine1',
             states: [
               {
-                name: 'Name',
+                name: 'state1',
                 entry: [
                   {
-                    type: 'assign',
-                    variable: 'Variable',
-                    value: 'Value'
+                    reference: 'action1'
                   }
                 ],
                 on: [
                   {
-                    target: 'Name',
+                    target: 'state2',
                     event: 'e1'
                   }
+                ]
+              },
+              {
+                name: 'state2',
+                entry: [
+                  {
+                    type: 'assign',
+                    variable: 'var',
+                    value: 'var+1'
+                  }
                 ],
-                exit: [],
-                while: [],
-                after: [],
-                localContext: {},
-                persistentContext: {},
-                staticContext: {}
+                on: [
+                  {
+                    target: 'state2',
+                    event: 'e2'
+                  }
+                ]
               }
             ],
-            localContext: {},
-            persistentContext: {},
-            guards: [],
-            actions: []
+            actions: [
+              {
+                name: 'action1',
+                type: 'create',
+                variable: 'var',
+                value: '5'
+              }
+            ]
           }
-        ],
-        localContext: {},
-        persistentContext: {}
+        ]
       }
       """;
 }

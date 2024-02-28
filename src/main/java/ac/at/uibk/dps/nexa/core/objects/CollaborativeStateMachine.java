@@ -28,11 +28,10 @@ public class CollaborativeStateMachine extends DirectedMultigraph<StateMachine, 
    * @return The built collaborative state machine if successful.
    * @throws IllegalArgumentException In case building failed, building can fail for various reasons.
    */
-  public static CollaborativeStateMachine build(
-      CollaborativeStateMachineClass collaborativeStateMachineClass)
+  public static CollaborativeStateMachine build(CollaborativeStateMachineClass collaborativeStateMachineClass)
       throws IllegalArgumentException {
-    var collaborativeStateMachine = new CollaborativeStateMachine(
-        collaborativeStateMachineClass.name, collaborativeStateMachineClass.memoryMode);
+    var collaborativeStateMachine = new CollaborativeStateMachine(collaborativeStateMachineClass.name,
+        collaborativeStateMachineClass.memoryMode);
 
     // Attempt to add vertices
     Arrays.stream(collaborativeStateMachineClass.stateMachines)
@@ -59,9 +58,5 @@ public class CollaborativeStateMachine extends DirectedMultigraph<StateMachine, 
       return Optional.empty();
     }
     return Optional.ofNullable(states.getFirst());
-  }
-
-  private void validate() throws IllegalArgumentException {
-
   }
 }

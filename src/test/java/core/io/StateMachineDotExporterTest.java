@@ -19,7 +19,8 @@ public class StateMachineDotExporterTest {
     assertDoesNotThrow(() -> {
       var out = new StringWriter();
       StateMachineDotExporter.export(out,
-          new Checker(new Checker.Options()).check(parser.parse(json)).getStateMachineByName("Name").get());
+          new Checker(new Checker.Options()).check(parser.parse(json)).getStateMachineByName("stateMachine1")
+              .get());
 
       System.out.println(out);
     });
